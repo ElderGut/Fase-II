@@ -1,1 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Clasificación de Cáncer de Mama</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: auto;
+      padding: 30px;
+      background: #f4f6f8;
+    }
+    h1 {
+      color: #1f2937;
+    }
+    textarea {
+      width: 100%;
+      height: 160px;
+      padding: 10px;
+      font-size: 14px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 12px 20px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 6px;
+    }
+    button:hover {
+      background: #1d4ed8;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: white;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
 
+  <h1>Clasificación de Cáncer de Mama</h1>
+
+  <p>Ingresa 30 valores numéricos separados por comas.</p>
+
+  <textarea id="features">17.99,10.38,122.8,1001,0.1184,0.2776,0.3001,0.1471,0.2419,0.07871,1.095,0.9053,8.589,153.4,0.006399,0.04904,0.05373,0.01587,0.03003,0.006193,25.38,17.33,184.6,2019,0.1622,0.6656,0.7119,0.2654,0.4601,0.1189</textarea>
+
+  <br>
+
+  <button onclick="predict()">Predecir</button>
+
+  <div class="result" id="result">
+    Resultado pendiente.
+  </div>
+
+  <script>
+    async function predict() {
+      const text = document.getElementById("features").value;
+      const features = text.split(",").map(x => parseFloat(x.trim()));
+
+      const response = await fetch("http://localhost:8000/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ features: features })
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        document.getElementById("result").innerHTML = "<b>Error:</b> " + data.error;
+      } else {
+        document.getElementById("result").innerHTML = `
+          <b>Resultado:</b> ${data.label}<br>
+          <b>Confianza:</b> ${data.confidence}
+        `;
+      }
+    }
+  </script>
+
+</body>
+</html>
