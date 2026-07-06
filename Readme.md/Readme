@@ -1,1 +1,108 @@
+# Actividad 7 - Contenerización y Despliegue Local
 
+## Descripción
+
+Este proyecto implementa una solución técnica desplegable basada en un modelo de Machine Learning para la clasificación de tumores de mama utilizando el dataset Breast Cancer Wisconsin.
+
+La aplicación integra un frontend desarrollado en HTML con un backend implementado mediante FastAPI. El modelo de aprendizaje automático fue entrenado utilizando Logistic Regression y posteriormente contenerizado mediante Docker para facilitar su portabilidad y despliegue.
+
+---
+
+## Tecnologías utilizadas
+
+- Python 3.12
+- FastAPI
+- Scikit-learn
+- Joblib
+- HTML
+- Docker Desktop
+- WSL2
+
+---
+
+## Estructura del proyecto
+
+```
+Actividad7/
+│
+├── app/
+│   ├── main.py
+│   ├── train_model.py
+│   ├── model.pkl
+│   └── requirements.txt
+│
+├── frontend/
+│   └── index.html
+│
+├── evidencias/
+│
+├── Dockerfile
+├── README.md
+├── manual_despliegue.docx
+└── validacion_pruebas.docx
+```
+
+---
+
+## Construcción del contenedor
+
+```bash
+docker build -t breast-cancer-api .
+```
+
+---
+
+## Ejecución
+
+```bash
+docker run -p 8000:8000 breast-cancer-api
+```
+
+---
+
+## Acceso
+
+Swagger
+
+```
+http://localhost:8000/docs
+```
+
+API
+
+```
+http://localhost:8000
+```
+
+---
+
+## Endpoint principal
+
+POST
+
+```
+/predict
+```
+
+Recibe un arreglo de 30 variables numéricas correspondientes al dataset Breast Cancer Wisconsin y devuelve:
+
+- Predicción
+- Etiqueta
+- Nivel de confianza
+
+---
+
+## Evidencias
+
+Las capturas de funcionamiento se encuentran dentro de la carpeta:
+
+```
+evidencias/
+```
+
+---
+
+## Autor
+
+Elder Gutiérrez López
+Maestría en Inteligencia Artificial
